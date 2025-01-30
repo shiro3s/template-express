@@ -1,9 +1,14 @@
 {
+  "name": "api",
   "version": "1.0.0",
   "private": true,
+  "scripts": {
+    "start": "turbo run start"
+  },
   "devDependencies": {
     "turbo": "^2.1.2"
   },
+  "packageManager": "bun@1.1.7",
   "workspaces": [
     "apps/*"
   ]

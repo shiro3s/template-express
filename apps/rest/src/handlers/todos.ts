@@ -1,9 +1,10 @@
 import { createTodoDto, findAllTodoDto } from "@/dto/todos";
-import type { ExpressFindAllTodoQuery } from "@/models/todos";
+import type { ExpressFindAllTodoQuery, UpdateTodoQuery } from "@/models/todos";
 import {
 	todoServiceCreate,
 	todoServiceFindAll,
 	todoServiceFindById,
+	todoServiceUpdate,
 } from "@/services/todos";
 import { numeric } from "@/utils/convert";
 import type { PrismaClient } from "@prisma/client";
@@ -65,8 +66,20 @@ export const createTodo = async (
 	}
 };
 
-export const updateTodo = (req: Request, res: Response, next: NextFunction) => {
-	return res.status(200).send("update");
+export const updateTodo = async (
+	req: Request<{ id: string }, undefined, UpdateTodoQuery, undefined>,
+	res: Response,
+	next: NextFunction,
+) => {
+	try {
+		const id = numeric(req.params.id);
+		const prisma = req.app.get("prisma") as PrismaClient;
+		const todo = await todoServiceUpdate(prisma, id, req.body);
+
+		return res.status(200).send(todo);
+	} catch (error) {
+		return next(error);
+	}
 };
 
 export const deleteTodo = (req: Request, res: Response, next: NextFunction) => {

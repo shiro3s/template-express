@@ -1,5 +1,9 @@
-import { createTodo, findAllTodo, findTodoById } from "@/dao/todos";
-import type { CreateTodoQuery, FindAllTodoQuery } from "@/models/todos";
+import { createTodo, findAllTodo, findTodoById, updateTodo } from "@/dao/todos";
+import type {
+	CreateTodoQuery,
+	FindAllTodoQuery,
+	UpdateTodoQuery,
+} from "@/models/todos";
 import type { PrismaClient } from "@prisma/client";
 
 export const todoRepositoryFindAll = async (
@@ -23,6 +27,12 @@ export const todoRepositoryCreate = async (
 	return await createTodo(prisma, todo);
 };
 
-export const todoRepositoryUpdate = () => {};
+export const todoRepositoryUpdate = async (
+	prisma: PrismaClient,
+	id: number,
+	data: UpdateTodoQuery,
+) => {
+	return await updateTodo(prisma, id, data);
+};
 
 export const todoRepositoryDelete = () => {};

@@ -58,17 +58,13 @@ export const createTodo = async (
 export const updateTodo = async (
 	prisma: PrismaClient,
 	id: number,
-	cond: UpdateTodoQuery,
+	data: UpdateTodoQuery,
 ) => {
 	const todo = await prisma.todo.update({
 		where: {
-			id: id,
+			id,
 		},
-		data: {
-			title: cond.title,
-			done: cond.done,
-			is_deleted: cond.is_deleted,
-		},
+		data,
 	});
 
 	return todo;
