@@ -1,0 +1,24 @@
+{
+  "name": "@repo/rest",
+  "scripts": {
+    "start": "bun run --watch ./src/main.ts",
+    "oas:gen": "openapi-typescript ./schema/oas.yml -o ./src/gen/schema.d.ts",
+    "prisma": "bunx prisma generate"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.19.1",
+    "@prisma/extension-accelerate": "^1.1.0",
+    "body-parser": "^2.0.1",
+    "cors": "^2.8.5",
+    "express": "4.21.0",
+    "express-validator": "^7.2.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "4.17.21",
+    "@types/morgan": "^1.9.9",
+    "openapi-typescript": "^7.4.1",
+    "typescript": "^5.6.2"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "turbo": "^2.1.2"
+  },
+  "workspaces": [
+    "apps/*"
+  ]
+}
