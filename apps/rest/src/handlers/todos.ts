@@ -2,6 +2,7 @@ import { createTodoDto, findAllTodoDto } from "@/dto/todos";
 import type { ExpressFindAllTodoQuery, UpdateTodoQuery } from "@/models/todos";
 import {
 	todoServiceCreate,
+	todoServiceDelete,
 	todoServiceFindAll,
 	todoServiceFindById,
 	todoServiceUpdate,
@@ -71,6 +72,11 @@ export const updateTodo = async (
 	res: Response,
 	next: NextFunction,
 ) => {
+	const validate = validationResult(req);
+
+	if (!validate.isEmpty())
+		return res.status(400).json({ error: validate.array() });
+
 	try {
 		const id = numeric(req.params.id);
 		const prisma = req.app.get("prisma") as PrismaClient;
@@ -82,6 +88,23 @@ export const updateTodo = async (
 	}
 };
 
-export const deleteTodo = (req: Request, res: Response, next: NextFunction) => {
-	return res.status(200).send("delete");
+export const deleteTodo = async (
+	req: Request<{ id: string }, undefined, undefined, undefined>,
+	res: Response,
+	next: NextFunction,
+) => {
+	const validate = validationResult(req);
+
+	if (!validate.isEmpty())
+		return res.status(400).json({ error: validate.array() });
+
+	try {
+		const id = numeric(req.params.id);
+		const prisma = req.app.get("prisma") as PrismaClient;
+		await todoServiceDelete(prisma, id);
+
+		return res.status(200).send("OK");
+	} catch (error) {
+		return next(error);
+	}
 };

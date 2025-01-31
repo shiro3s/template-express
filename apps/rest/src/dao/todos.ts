@@ -69,3 +69,11 @@ export const updateTodo = async (
 
 	return todo;
 };
+
+export const deleteTodo = async (prisma: PrismaClient, id: number) => {
+	await prisma.todo.delete({
+		where: {
+			id,
+		},
+	});
+};
